@@ -1,0 +1,68 @@
+server:
+  port: 9090
+
+spring:
+  http:
+    encoding:
+      charset: utf-8
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: NON_NULL
+
+druid:
+  type: com.alibaba.druid.pool.DruidDataSource
+  master:
+    url: jdbc:mysql://192.168.1.203:3306/mail-1.0?characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&useUnicode=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: artolia
+    initialSize: 5
+    minIdle: 1
+    maxActive: 100
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPrepareStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    filters: stat,wall,slf4j
+    useGlobalDataSourceStat: false
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  slave:
+    url: jdbc:mysql://192.168.1.202:3306/mail-1.0?characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&useUnicode=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: artolia
+    initialSize: 5
+    minIdle: 1
+    maxActive: 100
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPrepareStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    filters: stat,wall,slf4j
+    useGlobalDataSourceStat: false
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+mybatis:
+  type-aliases-package: com.artolia.mailproducer
+  mapper-locations: classpath:com/artolia/mailproducer/mapping/*.xml
+
+logging:
+  level:
+    tk.mybatis: trace
+    com.artolia.mailproducer.mapper: debug
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
